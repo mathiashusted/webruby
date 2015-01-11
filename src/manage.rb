@@ -6,6 +6,12 @@ else
 	raise "config.rb does not exist!"
 end
 
+if Log == nil
+	Log = "log.txt"
+end
+
+File.write Log, "Started at #{Time.now}"
+
 def render(file, client)
 	unless Private_Files.include? file
 		client.print File.new(file, "r").read
@@ -18,6 +24,7 @@ def start_server(port)
 	puts "Configuring server..."
 	if Templates[:default] == nil
 		Templates[:default] = "index.html"
+		File.write Log, "No default site specified, assuming index.html"
 	end
 
 	puts "Server running!"
@@ -62,4 +69,3 @@ if ARGV[0] != nil
 else
 	puts "You didn't specify an action!"
 end
-

@@ -4,7 +4,10 @@ Host = {
 	:defaultport => 8000
 }
 
-#Files that are not accesible from the server
+#Sets the filename for the log file
+Log = "log.txt"
+
+#Files that are not accesible for a client
 Private_Files = [
 	"config.rb",
 	"manage.rb"
