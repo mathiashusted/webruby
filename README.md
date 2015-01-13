@@ -8,7 +8,7 @@ Goals:
 * A both easy and complex script
 
 Planned features (ordered by priority):
-1. Plugins
-2. IP Detection + Ban
+1. IP Detection + Ban
+2. Plugins
 
 ######webruby is in a very early state, use with caution.
