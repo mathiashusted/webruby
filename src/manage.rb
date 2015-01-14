@@ -37,6 +37,7 @@ def start_server(port)
 		while client = server.accept
 			client.print "HTTP/1.1 200/OK\r\nContent-type:text/html\r\n\r\n"
 			request = client.gets
+			sock_domain, remote_port, remote_hostname, remote_ip = client.peeraddr
 			filename = request.gsub(/GET\ \//, '').gsub(/\ HTTP.*/, '').chomp
 			if filename == ""
 				filename = Templates[:default]
@@ -45,7 +46,15 @@ def start_server(port)
 				filename = Templates_Dir + filename
 			end
 			if File.exists? filename
-				render filename, client
+				if not Banned_IPs.include? remote_ip
+					render filename, client
+				else
+					if Templates[:banned] != nil
+						render Templates[:banned], client
+					else
+						client.print "You have been banned from this website!"
+					end
+				end
 			else
 				if Templates[:error_404] != nil
 					if Templates_Dir != nil

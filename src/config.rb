@@ -13,10 +13,17 @@ Private_Files = [
 	"manage.rb"
 ]
 
+#Enter banned IPs as strings
+#This feature has not been thoroughly tested yet
+Banned_IPs = [
+	"127.0.0.1"
+]
+
 #Sites to display in certain cases
 Templates = {
 	:default => "index.html",
-	:error_404 => nil
+	:error_404 => nil,
+	:banned => nil
 }
 
 #Default directory for the site
