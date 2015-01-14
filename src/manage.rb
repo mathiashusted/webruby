@@ -70,7 +70,11 @@ if ARGV[0] != nil
 			ARGV[1] = Host[:defaultport]
 		end
 		start = Thread.new{start_server ARGV[1]}
-		start.join
+		begin
+			start.join
+		rescue SystemExit, Interrupt
+			puts "\nServer stopped at #{Time.now}"
+		end
 	else
 		puts "Could not find action #{ARGV[0]}. Did you misspell it?"
 	end
