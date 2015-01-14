@@ -16,7 +16,7 @@ Private_Files = [
 #Enter banned IPs as strings
 #This feature has not been thoroughly tested yet
 Banned_IPs = [
-	"127.0.0.1"
+	
 ]
 
 #Sites to display in certain cases
