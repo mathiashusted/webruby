@@ -4,9 +4,6 @@ Host = {
 	:defaultport => 8000
 }
 
-#Sets the filename for the log file
-Log = "log.txt"
-
 #Files that are not accesible for a client
 Private_Files = [
 	"config.rb",
@@ -28,3 +25,7 @@ Templates = {
 
 #Default directory for the site
 Templates_Dir = "views/"
+
+#Set this to true to allow Ruby code in the html document
+#Currently in testing phase
+Ruby_Mode = false
