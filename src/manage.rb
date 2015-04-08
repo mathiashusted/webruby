@@ -1,25 +1,19 @@
 require 'socket'
 
-if File.exists? 'config.rb'
+if File.exists? 'config.rb' and File.exists? 'render.rb'
 	require_relative 'config'
+	require_relative 'render.rb'
 else
-	raise "config.rb does not exist!"
-end
-
-if Log == nil
-	Log = "log.txt"
-end
-
-def render(file, client)
-	unless Private_Files.include? file
-		client.print File.new(file, "r").read
+	doesnt_exist = " does not exist! You can download it again by cloning or downloading the Git repository at http://github.com/mksas/webruby and paste it into the main folder"
+	if not File.exists? 'config.rb'
+		raise "config.rb #{doesnt_exist}"
+	elsif not File.exists? 'render.rb'
+		raise "render.rb #{doesnt_exist}"
 	end
 end
 
+
 def start_server(port)
-	puts "Loading log.txt..."
-	File.open Log, "a+" do |log|
-		log.puts "\n\nStarted at #{Time.now}"
 		if port.to_i <= 65535
 			puts "Starting server on port #{port}..."
 			server = TCPServer.new Host[:hostname], port
@@ -28,14 +22,11 @@ def start_server(port)
 				Templates[:default] = "index.html"
 			end
 		else
-			log.puts "Port above 65535, exiting..."
 			raise "Your port can't be higher than 65535!"
 		end
 
-		log.puts "Server started successfully on port #{port} at #{Time.now}"
-		puts "Server running!"
+		puts "Server running! Press CTRL + C at anytime to stop"
 		while client = server.accept
-			client.print "HTTP/1.1 200/OK\r\nContent-type:text/html\r\n\r\n"
 			request = client.gets
 			sock_domain, remote_port, remote_hostname, remote_ip = client.peeraddr
 			filename = request.gsub(/GET\ \//, '').gsub(/\ HTTP.*/, '').chomp
@@ -68,8 +59,6 @@ def start_server(port)
 			end
 			client.close
 		end
-	end
-	log.close
 end
 
 if ARGV[0] != nil
